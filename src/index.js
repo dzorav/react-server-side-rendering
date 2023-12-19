@@ -1,32 +1,18 @@
-import express from "express"
+import express from "express";
+import renderer from "./helpers/renderer";
 const app = express()
-import React from "react";
-import { renderToString } from "react-dom/server"
-import Home from "./client/components/Home";
 
 app.use(express.static('public'))
 
 app.get("/", (req, res) => {
-    const content = renderToString(<Home />);
 
-    const html = `
-            <!DOCTYPE html>
-            <html lang="en">
-            <head>
-                <meta charset="UTF-8" />
-                <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-                <title>Document</title>
-            </head>
-            <body>
-                <div id="root">${content}</div>
-                <div id="roota"></div>
-                <script src="bundle.js"></script>
-            </body>
-            </html>    
-    `
 
-    res.send(html)
+    res.send(renderer())
 })
+
+// app.get("/bundle.js", (req, res) => {
+//     res.send("loca")
+// })
 
 app.listen(3000, () => {
     console.log("Listening on port 3000")
